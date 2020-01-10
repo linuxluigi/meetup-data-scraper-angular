@@ -1,6 +1,8 @@
 # MeetupDataScraperAngular
 
 [![Build Status](https://travis-ci.com/linuxluigi/meetup-data-scraper-angular.svg?branch=master)](https://travis-ci.com/linuxluigi/meetup-data-scraper-angular)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f96f615f418243e39c69732dc63aeaa6)](https://www.codacy.com/manual/linuxluigi/meetup-data-scraper-angular?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=linuxluigi/meetup-data-scraper-angular&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/f96f615f418243e39c69732dc63aeaa6)](https://www.codacy.com/manual/linuxluigi/meetup-data-scraper-angular?utm_source=github.com&utm_medium=referral&utm_content=linuxluigi/meetup-data-scraper-angular&utm_campaign=Badge_Coverage)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.20.
 
