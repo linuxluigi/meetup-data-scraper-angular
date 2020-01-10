@@ -25,8 +25,10 @@ install:
 
 script:
     - npm run lint
-    - npm run test -- --watch=false
+    - npm run test -- --watch=false --code-coverage
     - npm run e2e ----protractor-config=e2e/protractor-ci.conf.js 
+    # upload code coverage
+    - cat ./coverage/meetup-data-scraper-angular/lcov.info | codacy-coverage
     
 cache:
   directories:
