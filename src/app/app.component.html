@@ -1,5 +1,41 @@
-<mat-toolbar>
-  <span>Meetup Search</span>
-</mat-toolbar>
+<div class="site">
+  <div class="site-content">
+    <mat-toolbar color="primary" role="heading" class="header">
+      <mat-toolbar-row>
 
-<router-outlet></router-outlet>
+        <!-- title -->
+        <button mat-button [routerLink]="['/']" class="header-logo">Meetup Search</button>
+
+        <!-- This fills the remaining space of the current row -->
+        <span class="example-fill-remaining-space"></span>
+
+        <!-- github link -->
+        <a href="https://github.com/linuxluigi/meetup-data-scraper/" target="_blank">
+          <img src="assets/img/github/GitHub-Mark-Light-32px.png" alt="Source Code">
+        </a>
+
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+
+  <footer>
+    <mat-toolbar color="primary" role="footer">
+
+      <!-- footer links -->
+      <mat-toolbar-row>
+        <ul class="footer-links">
+          <li><button mat-button [routerLink]="['/imprint']">Imprint</button></li>
+          <li><button mat-button [routerLink]="['/privacy']">Privacy</button></li>
+        </ul>
+      </mat-toolbar-row>
+      <!-- footer links -->
+
+    </mat-toolbar>
+  </footer>
+
+</div>

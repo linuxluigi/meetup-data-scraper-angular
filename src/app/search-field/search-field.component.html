@@ -1,0 +1,8 @@
+<form (ngSubmit)="onSubmit(searchForm)" #searchForm="ngForm">
+  <mat-form-field>
+    <input matInput placeholder="Meetup Search" [ngModel]="searchQuery" name="query">
+    <button matSuffix mat-button>
+      <mat-icon matSuffix>search</mat-icon>
+    </button>
+  </mat-form-field>
+</form>
