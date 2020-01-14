@@ -1,13 +1,21 @@
-<form (ngSubmit)="onSubmit(searchForm)" #searchForm="ngForm" (keyup)="onPressKey(searchForm)">
-  <mat-form-field>
-    <input matInput placeholder="Meetup Search" [ngModel]="searchQuery" name="query" [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-        {{option}}
-      </mat-option>
-    </mat-autocomplete>
-    <button matSuffix mat-button>
-      <mat-icon matSuffix>search</mat-icon>
-    </button>
-  </mat-form-field>
-</form>
+<app-search-field></app-search-field>
+
+<mat-paginator [length]="searchResponse.hits" [pageSize]="searchLimit" [pageSizeOptions]="[5, 10, 25, 100]"
+    [pageIndex]="searchOffset" *ngIf="!showSpinner" (page)="onPaginatorChanged($event)">
+</mat-paginator>
+
+<div class="spinner" *ngIf="showSpinner">
+    <mat-spinner></mat-spinner>
+</div>
+
+<mat-list role="list" *ngIf="!showSpinner">
+    <mat-card *ngFor="let item of searchResponse.results">
+        <mat-card-title>{{item.name}}</mat-card-title>
+        <mat-card-subtitle><a href="{{item.link}}" target="_blank">{{item.urlname}}</a></mat-card-subtitle>
+        <mat-card-content [innerHTML]='item.description'></mat-card-content>
+    </mat-card>
+</mat-list>
+
+<mat-paginator [length]="searchResponse.hits" [pageSize]="searchLimit" [pageSizeOptions]="[5, 10, 25, 100]"
+    [pageIndex]="searchOffset" *ngIf="!showSpinner" (page)="onPaginatorChanged($event)">
+</mat-paginator>

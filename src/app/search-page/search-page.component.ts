@@ -1,93 +1,55 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { NgForm, FormControl } from '@angular/forms';
-import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-
-export interface suggestResponse {
-  suggestions: string[];
-}
+import { ISearchResponse, ISearchRequest } from '../services/interfaces';
+import { SearchService } from '../services/search.service';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-search-page',
   templateUrl: './search-page.component.html',
-  styleUrls: ['./search-page.component.css']
+  styleUrls: ['./search-page.component.scss']
 })
 export class SearchPageComponent implements OnInit {
 
-  searchQuery: string;
-  searchLimit: number;
+  showSpinner = true;
+  searchResponse: ISearchResponse;
 
-  // autocomplete
-  myControl = new FormControl();
-  options: string[] = [];
-  filteredOptions: Observable<string[]>;
+  // pagination
+  searchLimit = 10;
+  searchOffset = 0;
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private http: HttpClient) {
+  constructor(private searchService: SearchService) {
 
-    // get search query param
-    this.activatedRoute.queryParams.subscribe(params => {
-      const date = params.startdate;
-      console.log(date); // Print the parameter to the console.
-    });
+    // spinner listener
+    this.searchService.showSpinnerChanged
+      .subscribe(
+        (showSpinner: boolean) => {
+          this.showSpinner = showSpinner;
+        }
+      );
+
+    // search response listener
+    this.searchService.searchChanged
+      .subscribe(
+        (searchResponse: ISearchResponse) => {
+          this.searchResponse = searchResponse;
+        }
+      );
 
   }
 
-  ngOnInit() {
-    this.initAutocomplete();
-  }
+  ngOnInit() { }
 
-  // autocomplete
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
-  }
-
-  private initAutocomplete() {
-    // autocomplete
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
-  }
-
-  onSubmit(form: NgForm) {
+  onPaginatorChanged(pageEvent: PageEvent) {
     /*
-    Submit query from to api
+    set pagination
     */
-    if (form.value.query) {
-      const navigationExtras: NavigationExtras = {
-        queryParams: { q: form.value.query },
-      };
-      if (this.searchLimit) {
-        navigationExtras.queryParams.limit = this.searchLimit;
-      }
-      this.router.navigate(['/search'], navigationExtras);
-    }
+    this.searchLimit = pageEvent.pageSize;
+    this.searchOffset = pageEvent.pageIndex;
 
-  }
+    this.searchService.requestData.limit = this.searchLimit;
+    this.searchService.requestData.page = this.searchOffset;
 
-  onPressKey(form: NgForm) {
-    /*
-    Load on each key press the suggestion from the api
-    */
-    this.getSugestions(form.value.query);
-  }
-
-  getSugestions(query: string) {
-    /*
-    Get suggestion from api server
-    */
-    console.log(environment.apiUrl + 'suggest/');
-    return this.http.put<suggestResponse>(environment.apiUrl + 'suggest/', { query })
-      .subscribe(sugestionsResults => {
-        const suggest: suggestResponse = sugestionsResults as suggestResponse;
-        this.options = suggest.suggestions;
-        this.initAutocomplete();
-      });
+    this.searchService.fetchSearch();
   }
 
 }
