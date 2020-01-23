@@ -1,21 +1,128 @@
 <app-search-field></app-search-field>
 
-<mat-paginator [length]="searchResponse.hits" [pageSize]="searchLimit" [pageSizeOptions]="[5, 10, 25, 100]"
-    [pageIndex]="searchOffset" *ngIf="!showSpinner" (page)="onPaginatorChanged($event)">
+<div>
+  <!-- set location button -->
+  <button
+    class="filter-element"
+    mat-raised-button
+    (click)="openLocationDialog()"
+  >
+    Set Location
+  </button>
+  <!-- set location button -->
+
+  <!-- show / hide map button -->
+  <button
+    class="filter-element"
+    mat-raised-button
+    (click)="onChangeMapView()"
+    *ngIf="!showMap"
+  >
+    Show Map
+  </button>
+  <button
+    class="filter-element"
+    mat-raised-button
+    (click)="onChangeMapView()"
+    *ngIf="showMap"
+  >
+    Hide Map
+  </button>
+  <!-- show / hide map button -->
+
+  <!-- set sorting -->
+  <mat-form-field class="filter-element">
+    <mat-label>Sorting</mat-label>
+    <mat-select [(ngModel)]="sortOption" (ngModelChange)="onDateChanged()">
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let option of sortOptions" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- set sorting -->
+
+  <!-- remove distance filter -->
+  <button
+    class="filter-element"
+    mat-raised-button
+    (click)="onRemoveLocation()"
+    *ngIf="searchLocation.name"
+  >
+    Remove {{ searchLocation.name }}, {{ searchLocation.distance }}
+  </button>
+  <!-- remove distance filter -->
+
+  <!-- date filter -->
+  <mat-form-field class="filter-element" color="accent">
+    <mat-label>From</mat-label>
+    <input
+      matInput
+      [matDatepicker]="fromDatePicker"
+      [(ngModel)]="fromDate"
+      (ngModelChange)="onDateChanged()"
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="fromDatePicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #fromDatePicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="filter-element" color="accent">
+    <mat-label>To</mat-label>
+    <input
+      matInput
+      [matDatepicker]="fromToPicker"
+      [(ngModel)]="toDate"
+      (ngModelChange)="onDateChanged()"
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="fromToPicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #fromToPicker color="primary"></mat-datepicker>
+  </mat-form-field>
+  <!-- date filter -->
+</div>
+
+<mat-paginator
+  [length]="searchResponse.hits"
+  [pageSize]="searchLimit"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+  [pageIndex]="searchOffset"
+  *ngIf="!showSpinner"
+  (page)="onPaginatorChanged($event)"
+>
 </mat-paginator>
 
 <div class="spinner" *ngIf="showSpinner">
-    <mat-spinner></mat-spinner>
+  <mat-spinner></mat-spinner>
 </div>
 
+<div id="search-map" class="map" [class.hide]="!showMap"></div>
+
 <mat-list role="list" *ngIf="!showSpinner">
-    <mat-card *ngFor="let item of searchResponse.results">
-        <mat-card-title>{{item.name}}</mat-card-title>
-        <mat-card-subtitle><a href="{{item.link}}" target="_blank">{{item.urlname}}</a></mat-card-subtitle>
-        <mat-card-content [innerHTML]='item.description'></mat-card-content>
-    </mat-card>
+  <mat-card
+    (click)="onSelectitem(item)"
+    *ngFor="let item of searchResponse.results"
+  >
+    <mat-card-title>{{ item.name }}</mat-card-title>
+    <mat-card-subtitle
+      ><a href="{{ item.link }}" target="_blank">{{
+        item.urlname
+      }}</a></mat-card-subtitle
+    >
+    <mat-card-content [innerHTML]="item.description"></mat-card-content>
+  </mat-card>
 </mat-list>
 
-<mat-paginator [length]="searchResponse.hits" [pageSize]="searchLimit" [pageSizeOptions]="[5, 10, 25, 100]"
-    [pageIndex]="searchOffset" *ngIf="!showSpinner" (page)="onPaginatorChanged($event)">
+<mat-paginator
+  [length]="searchResponse.hits"
+  [pageSize]="searchLimit"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+  [pageIndex]="searchOffset"
+  *ngIf="!showSpinner"
+  (page)="onPaginatorChanged($event)"
+>
 </mat-paginator>

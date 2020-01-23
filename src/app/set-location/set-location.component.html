@@ -1,0 +1,38 @@
+<div class="content">
+
+  <form (ngSubmit)="onSubmit(locationForm)" #locationForm="ngForm">
+
+    <mat-form-field>
+      <input matInput placeholder="Location" [ngModel]="searchQuery" name="location">
+      <button matSuffix mat-button>
+        <mat-icon matSuffix>search</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="number" placeholder="Distance in m" [ngModel]="distance" name="distance">
+    </mat-form-field>
+
+    <mat-progress-bar mode="indeterminate" *ngIf="showPorgressbar"></mat-progress-bar>
+  </form>
+  <button mat-button (click)="onRemoveLocation()" *ngIf="data.name">Remove {{data.name}}, {{data.distance}}</button>
+
+  <div class="container">
+
+    <div>
+      <mat-list role="list" *ngIf="nominatimResponse">
+        <mat-list-item role="listitem" *ngFor="let item of nominatimResponse">
+          <button mat-raised-button (click)="onSelectLocation(item, locationForm)">{{item.display_name}}</button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+    <div id="nominatim-map" class="map"></div>
+
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Close</button>
+  </div>
+
+</div>

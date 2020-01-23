@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://meetup.bier.host/'
+  apiUrl: 'http://localhost:5000/'
 };
 
 /*
