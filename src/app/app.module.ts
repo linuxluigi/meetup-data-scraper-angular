@@ -12,7 +12,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { PrivacyPageComponent } from './privacy-page/privacy-page.component';
 import { SearchFieldComponent } from './search-field/search-field.component';
 import { SearchPageComponent } from './search-page/search-page.component';
-import { SetLocationComponent } from './search-page/set-location/set-location.component';
+import { SetLocationComponent } from './set-location/set-location.component';
 
 @NgModule({
   declarations: [
