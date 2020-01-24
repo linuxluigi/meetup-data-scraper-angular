@@ -1,12 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgForm, FormControl } from '@angular/forms';
-import { NavigationExtras, Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, NgForm } from '@angular/forms';
+import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { ISuggestResponse } from '../services/interfaces';
-import { environment } from 'src/environments/environment';
-import { SuggestService } from '../services/suggest.service';
 import { SearchService } from '../services/search.service';
+import { SuggestService } from '../services/suggest.service';
 
 @Component({
   selector: 'app-search-field',
@@ -23,7 +22,12 @@ export class SearchFieldComponent implements OnInit {
   options: string[] = [];
   filteredOptions: Observable<string[]>;
 
-  constructor(private route: ActivatedRoute, private router: Router, private suggestService: SuggestService, private searchService: SearchService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private suggestService: SuggestService,
+    private searchService: SearchService
+  ) {
     // get search query param
     this.route.queryParams.subscribe((params: Params) => {
       if (params.q) {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import * as L from 'leaflet';
-import { IGroup, ISearchResponse, ISetLocation, IVenue } from '../services/interfaces';
+import { IGroup, ISearchResponse, ISetLocation } from '../services/interfaces';
 import { SearchService } from '../services/search.service';
 import { SetLocationComponent } from '../set-location/set-location.component';
 
@@ -106,15 +106,15 @@ export class SearchPageComponent implements OnInit {
     });
 
     const markers: any[] = [];
-    this.searchResponse.results.forEach(function(group: IGroup) {
-      group.venues.forEach(function(venue: IVenue) {
+    this.searchResponse.results.forEach(group => {
+      group.venues.forEach(venue => {
         const marker = L.marker([venue.location.lat, venue.location.lon], { icon: mapMarkerIcon }).addTo(map);
         marker.bindPopup(venue.name + ': <a target="_blank" href="' + group.link + '">' + group.name + '</a>');
         markers.push(marker);
       });
     });
 
-    this.markers.forEach(function(marker) {
+    this.markers.forEach(marker => {
       map.removeLayer(marker);
     });
 
