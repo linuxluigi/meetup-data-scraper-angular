@@ -11,9 +11,9 @@ describe('PrivacyPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PrivacyPageComponent ]
+      declarations: [PrivacyPageComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
