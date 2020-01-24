@@ -1,8 +1,10 @@
 /* tslint:disable:no-unused-variable */
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MaterialModule } from '../material/material.module';
 import { SearchFieldComponent } from './search-field.component';
 
 describe('SearchFieldComponent', () => {
@@ -11,9 +13,16 @@ describe('SearchFieldComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchFieldComponent ]
+      declarations: [SearchFieldComponent],
+      imports: [
+        MaterialModule,
+        FormsModule,
+        RouterTestingModule,
+        BrowserAnimationsModule,
+        HttpClientTestingModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

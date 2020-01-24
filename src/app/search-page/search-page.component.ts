@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
+import * as L from 'leaflet';
 import { IGroup, ISearchResponse, ISetLocation, IVenue } from '../services/interfaces';
 import { SearchService } from '../services/search.service';
 import { SetLocationComponent } from '../set-location/set-location.component';
-declare let L;
 
 @Component({
   selector: 'app-search-page',
