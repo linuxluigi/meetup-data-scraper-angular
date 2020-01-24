@@ -4,7 +4,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as L from 'leaflet';
 import { INominatim, ISetLocation } from '../services/interfaces';
 import { NominatimService } from '../services/nominatim.service';
-import { SearchService } from '../services/search.service';
 
 @Component({
   selector: 'app-set-location',
@@ -13,8 +12,11 @@ import { SearchService } from '../services/search.service';
 })
 export class SetLocationComponent implements OnInit {
 
-  showPorgressbar = false;
-  nominatimResponse: [INominatim];
+  // nominatim fetching status
+  isFetching = false;
+  fetchingError = null;
+
+  nominatimResponse: INominatim[];
 
   searchQuery = '';
 
@@ -26,21 +28,28 @@ export class SetLocationComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<SetLocationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ISetLocation,
-    private nominatimService: NominatimService,
-    private searchService: SearchService
+    private nominatimService: NominatimService
   ) {
-    // Porgressbar listener
-    this.nominatimService.showProgressbarChanged
+    // fetching status listener
+    this.nominatimService.isFetchingChanged
       .subscribe(
-        (showPorgressbar: boolean) => {
-          this.showPorgressbar = showPorgressbar;
+        (isFetching: boolean) => {
+          this.isFetching = isFetching;
         }
       );
+
+    // fetching error listener
+    this.nominatimService.fetchingErrorChanged
+    .subscribe(
+      (fetchingError: boolean) => {
+        this.fetchingError = fetchingError;
+      }
+    );
 
     // nominatim response listener
     this.nominatimService.nominatimChanged
       .subscribe(
-        (nominatimResponse: [INominatim]) => {
+        (nominatimResponse: INominatim[]) => {
           this.nominatimResponse = nominatimResponse;
         }
       );

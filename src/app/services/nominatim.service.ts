@@ -1,5 +1,5 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { EventEmitter, Injectable } from '@angular/core';
 import { INominatim } from './interfaces';
 
 @Injectable({
@@ -7,25 +7,40 @@ import { INominatim } from './interfaces';
 })
 export class NominatimService {
 
-  nominatimChanged = new EventEmitter<[INominatim]>();
+  nominatimChanged = new EventEmitter<INominatim[]>();
 
-  // True -> search request is running; False -> done
-  showProgressbarChanged = new EventEmitter<boolean>();
+  // fetching status
+  isFetchingChanged = new EventEmitter<boolean>();
+
+  // fetching error
+  fetchingErrorChanged = new EventEmitter<string>();
 
   constructor(private http: HttpClient) { }
 
   fetchNoinatim(query: string) {
+    /*
+      Fetch gelocation from https://nominatim.openstreetmap.org by a query
+    */
 
-    // show progressbar
-    this.showProgressbarChanged.emit(true);
+    // set fetching to running
+    this.isFetchingChanged.emit(true);
+    // set fetching to running
+    this.fetchingErrorChanged.emit(null);
 
-    return this.http.get<[INominatim]>('https://nominatim.openstreetmap.org/search/' + query + '?format=json')
-      .subscribe(nominatimResults => {
+    // set response content type
+    const params = new HttpParams()
+      .set('format', 'json');
+
+    return this.http.get<INominatim[]>(`https://nominatim.openstreetmap.org/search/${query}`, { params })
+      .subscribe((nominatimResults: INominatim[]) => {
         // emit nominatim
-        this.nominatimChanged.emit(nominatimResults as [INominatim]);
+        this.nominatimChanged.emit(nominatimResults);
 
-        // hide progressbar
-        this.showProgressbarChanged.emit(false);
+        // set loading to done
+        this.isFetchingChanged.emit(false);
+      }, error => {
+        this.isFetchingChanged.emit(false);
+        this.fetchingErrorChanged.emit(error.message);
       });
   }
 
