@@ -1,0 +1,40 @@
+.site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+
+  .site-content {
+    flex: 1;
+
+    .header {
+      .header-logo {
+        font-size: larger;
+      }
+
+      .example-fill-remaining-space {
+        /* fill the remaining space  */
+        flex: 1 1 auto;
+      }
+    }
+
+    .content {
+      margin: 1em;
+    }
+  }
+
+  footer {
+    text-align: center;
+
+    .footer-links {
+      list-style: none;
+      padding-left: 0;
+      width: 100%;
+      font-size: small;
+      li {
+        display: inline-block;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+    }
+  }
+}

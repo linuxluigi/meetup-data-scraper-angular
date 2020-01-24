@@ -1,0 +1,14 @@
+.content {
+  width: 70vw;
+  height: 60vh;
+
+  .container {
+    display: flex; /* or inline-flex */
+    flex-direction: row;
+
+    .map {
+      width: 40vw;
+      height: 40vh;
+    }
+  }
+}

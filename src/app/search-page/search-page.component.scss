@@ -1,0 +1,33 @@
+.spinner {
+  height: 100%;
+
+  /* vertical center */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  mat-spinner {
+    /* horizontal center */
+    margin: 0 auto;
+  }
+}
+
+mat-card {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  cursor: pointer;
+}
+
+.map {
+  width: 100%;
+  height: 50em;
+  max-height: 80vh;
+}
+
+.hide {
+  display: none;
+}
+
+.filter-element {
+  margin-right: 0.5em;
+}
