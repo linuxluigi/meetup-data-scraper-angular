@@ -4,7 +4,7 @@ import { PageEvent } from '@angular/material/paginator';
 import * as L from 'leaflet';
 import { IGroup, ISearchResponse, ISetLocation } from '../services/interfaces';
 import { SearchService } from '../services/search.service';
-import { SetLocationComponent } from '../set-location/set-location.component';
+import { SetLocationComponent } from './set-location/set-location.component';
 
 @Component({
   selector: 'app-search-page',

@@ -2,9 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as L from 'leaflet';
-import { INominatim, ISetLocation } from '../services/interfaces';
-import { NominatimService } from '../services/nominatim.service';
-import { SearchService } from '../services/search.service';
+import { INominatim, ISetLocation } from 'src/app/services/interfaces';
+import { NominatimService } from 'src/app/services/nominatim.service';
+import { SearchService } from 'src/app/services/search.service';
+
 
 @Component({
   selector: 'app-set-location',
